@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="practica de javascript y DOM - ejercicio 2" />
+        <meta name="author" content="Carlos Escobar" />
+        <meta name="keywords" content="html javascript dom ejercicio" />
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>Practica de JavaScript y DOM - Ejercicio 2</title>
+    </head>
+    <body class="bg-primary">
+        <header>
+            <div class="container py-3 bg-dark">
+                <h1 class="display-1 text-center text-light">Generaciones</h1>
+            </div>
+        </header>
+
+        <main>
+            <section class="container">
+                <h2 class="pt-4 pb-1 text-warning text-center">Ingrese datos de una persona</h2>
+                <form class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label for="personaNombre" class="text-white">Nombre<p class="badge my-0 text-info">(3-50 caracteres)</p></label>
+                        <input type="text" class="form-control" minlength="3" maxlength="50" id="personaNombre" />
+                    </div>
+                    <div class="col-5 col-md-2">
+                        <label for="personaEdad" class="text-white">Edad<p class="badge my-0 text-info">(1-99)</p></label>
+                        <input type="text" class="form-control" id="personaEdad" />
+                    </div>
+                    <div class="col-5 col-md-3">
+                        <label for="personaDNI" class="text-white">DNI<p class="badge my-0 text-info">(5 o 6 dígitos)</p></label>
+                        <input type="text" class="form-control" id="personaDNI" />
+                    </div>
+                    <div class="col-2 col-md-1">
+                        <label for=""></label>
+                        <div class="form-control btn btn-success" id="genButton" onclick="generarDNI()">#</div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label for="personaSexo" class="text-white">Sexo<p class="badge my-0 text-info">(H/M)</p></label>
+                        <input type="text" class="form-control" id="personaSexo" />
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label for="personaPeso" class="text-white">Peso<p class="badge my-0 text-info">(1-200 kgs)</p></label>
+                        <input type="text" class="form-control" id="personaPeso" />
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label for="personaAltura" class="text-white">Altura<p class="badge my-0 text-info">(0.5-2.2 mts)</p></label>
+                        <input type="text" class="form-control" id="personaAltura" />
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label for="personaAnio" class="text-white">Año<p class="badge my-0 text-info">(1900-2022)</p></label>
+                        <input type="text" class="form-control" id="personaAnio" />
+                    </div>
+                    <div class="pt-3 col-12">
+                        <button type="button" class="btn btn-danger mb-3" onclick="agregarPersona()">Agregar persona</button>
+                    </div>
+                    <div id="alertElement" class="mt-4"></div>
+                </form>
+            </section>
+            <section id="seccionTabla" class="container visually-hidden">
+              <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Año</th>
+                  </tr>
+                </thead>
+                <tbody id="datosTabla">
+                  <!-- <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </section>
+        </main>
+
+        <footer></footer>
+
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
