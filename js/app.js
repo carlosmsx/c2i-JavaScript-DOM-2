@@ -20,7 +20,7 @@ class Form
         // this.inputAnioClass = this.inputAnio.className; 
     }
 
-    generarDNI()
+    generarDNI() //me pareció mejor dejar este método en esta clase
     {
         let dniGenerado = Math.floor(Math.random()*9) + 1; //solo el primer elemento se elige entre 1 y 9
         for (let i=1; i<8; i++) //geneoro el resto de numeros
@@ -46,7 +46,7 @@ class Form
         this.alertElement.append(wrapper)
     }
 
-    getDatos()
+    getPersona()
     {
         //validaciones
         let nombre = this.inputNombre.value;
@@ -132,8 +132,9 @@ class Generacion
 
     mostrarDatos()
     {
-        document.write(`<table border=1><tr><th>Generación</th><th>Rasgo característico</th></tr>`)
-        document.write(`<tr><td>${this.nombre}</td><td>${this.rasgoCaracteristico}</td></tr></table>`);
+        // document.write(`<table border=1><tr><th>Generación</th><th>Rasgo característico</th></tr>`)
+        // document.write(`<tr><td>${this.nombre}</td><td>${this.rasgoCaracteristico}</td></tr></table>`);
+        return `<table border=1><tr><th>Generación</th><th>Rasgo característico</th></tr><tr><td>${this.nombre}</td><td>${this.rasgoCaracteristico}</td></tr></table>`
     }
 }
 
@@ -150,16 +151,23 @@ class Persona
         this.anio = anio;
     }
 
-    mostrarGeneracion()
+    getIndiceGeneracion()
     {
         for (let i=0; i<generaciones.length; i++)
         {
             if (generaciones[i].pertenece(this.anio))
             {
-                generaciones[i].mostrarDatos();
-                break;
+                return i;
             }
         }
+        return -1;
+    }
+
+    mostrarGeneracion()
+    {
+        let index = this.getIndiceGeneracion();
+        if ( index >= 0 )
+            alert(generaciones[index].mostrarDatos(), 'danger');
     }
 
     esMayorDeEdad()
@@ -172,10 +180,28 @@ class Persona
 
     mostrarDatos()
     {
-        document.write(`<ul>`);
-        for (let propiedad in this)
-            document.write(`<li>${propiedad}: ${this[propiedad]}</li>`);
-        document.write(`</ul>`);
+        return `<tr>
+        <td>${this.nombre}</td>
+        <td>${this.edad}</td>
+        <td>${this.DNI}</td>
+        <td>${this.sexo}</td>
+        <td>${this.peso}</td>
+        <td>${this.altura}</td>
+        <td>${this.anio}</td>
+        <td>${this.esMayorDeEdad()}</td>
+        <td><a href="javascript:mostrarGeneracion(this)">generación</a></td>
+        </tr>`    
+    }
+
+    getDatos()
+    {
+        return `<tr>
+        <td>${this.nombre}</td>
+        <td>${this.edad}</td>
+        <td>${this.anio}</td>
+        <td>${this.esMayorDeEdad()}</td>
+        <td><a href="javascript:mostrarGeneracion(${this.getIndiceGeneracion()})">generación</a></td>
+        </tr>`    
     }
 }
 
@@ -204,20 +230,14 @@ function dibujarTabla()
     let datosTabla = document.getElementById("datosTabla");
     datosTabla.innerHTML = '';
     personas.forEach(persona => {
-        datosTabla.innerHTML += `<tr><td>${persona.nombre}</td><td>${persona.edad}</td><td>${persona.anio}</td></tr>`
-    //     persona.mostrarDatos();
-    //     persona.mostrarGeneracion();
-    //     if (persona.esMayorDeEdad())
-    //         document.write('*es mayor de edad<br>');
-    //     persona.generarDNI()
-    //     document.write('<hr>')
+        datosTabla.innerHTML += persona.getDatos();
     })
 }
 
 function agregarPersona()
 {
     form.clearAlert();
-    let persona = form.getDatos();
+    let persona = form.getPersona();
     if (persona != null)
     {
         personas.push(persona);
@@ -228,4 +248,9 @@ function agregarPersona()
 function generarDNI()
 {
     form.generarDNI()
+}
+
+function mostrarGeneracion(index)
+{
+    console.log(index);
 }
