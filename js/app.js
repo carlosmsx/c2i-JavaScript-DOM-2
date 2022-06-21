@@ -135,6 +135,7 @@ class Generacion
         // document.write(`<table border=1><tr><th>Generación</th><th>Rasgo característico</th></tr>`)
         // document.write(`<tr><td>${this.nombre}</td><td>${this.rasgoCaracteristico}</td></tr></table>`);
         return `<table border=1><tr><th>Generación</th><th>Rasgo característico</th></tr><tr><td>${this.nombre}</td><td>${this.rasgoCaracteristico}</td></tr></table>`
+        //return `Generación: ${this.nombre}<br>Rasgo característico: ${this.rasgoCaracteristico}`
     }
 }
 
@@ -195,12 +196,17 @@ class Persona
 
     getDatos()
     {
+        let indexGeneracion = this.getIndiceGeneracion();
+        let generacion = '';
+        if (indexGeneracion>=0)
+            generacion = `<a href="javascript:mostrarGeneracion(${indexGeneracion})">generación</a>`
+
         return `<tr>
         <td>${this.nombre}</td>
         <td>${this.edad}</td>
         <td>${this.anio}</td>
         <td>${this.esMayorDeEdad()}</td>
-        <td><a href="javascript:mostrarGeneracion(${this.getIndiceGeneracion()})">generación</a></td>
+        <td>${generacion}</td>
         </tr>`    
     }
 }
@@ -209,18 +215,12 @@ let form = new Form("personaNombre", "personaEdad", "personaDNI", "personaSexo",
 
 let generaciones = [];
 generaciones.push(new Generacion("Generación Z", 1994, 2010, 7800000, "Expansión masiva de internet", "Irreverencia"));
-generaciones.push(new Generacion("Generación Y<br><i>millenials</i>", 1981, 1993, 7200000, "Inicio de la digitalización", "Frustración"));
+generaciones.push(new Generacion("Generación Y - <i>millenials</i>", 1981, 1993, 7200000, "Inicio de la digitalización", "Frustración"));
 generaciones.push(new Generacion("Generación X", 1969, 1980, 9300000, "Crisis del 73 y transición Española", "Obsesión por el éxito"));
 generaciones.push(new Generacion("Baby Boom", 1949, 1968, 12200000, "Paz y explosión demográfica", "Ambición"));
-generaciones.push(new Generacion("<i>Silent Generation</i><br>Los niños de la postguerra", 1930, 1948, 6300000, "Conflictos bélicos", "Austeridad"));
+generaciones.push(new Generacion("<i>Silent Generation</i> - Los niños de la postguerra", 1930, 1948, 6300000, "Conflictos bélicos", "Austeridad"));
 
 let personas = [];
-// personas.push(new Persona("Chechu", 70, 6004033, "M", 58, 1.60, 1933));
-// personas.push(new Persona("Carlos", 48, 23157174, "H", 80, 1.72, 1973));
-// personas.push(new Persona("Maca", 40, 15615615, "M", 54, 1.68, 1981));
-// personas.push(new Persona("Rena", 30, 3332332, "M", 60, 1.67, 1991));
-// personas.push(new Persona("Fede", 20, 43344344, "H", 64, 1.64, 2001));
-// personas.push(new Persona("Ale", 3, 3232323, "H", 17, 1, 2015));
 
 function dibujarTabla()
 {
@@ -252,5 +252,26 @@ function generarDNI()
 
 function mostrarGeneracion(index)
 {
-    console.log(index);
+    let modalGeneracion = document.getElementById('modalGeneracion')
+    let modalTitle = modalGeneracion.querySelector('.modal-title')
+    let modalBody = modalGeneracion.querySelector('.modal-body')
+
+    modalTitle.innerHTML = generaciones[index].nombre;
+    modalBody.innerHTML = `Rasgo Característico: ${generaciones[index].rasgoCaracteristico}`;
+
+    let modalDialog = new bootstrap.Modal(modalGeneracion, {
+        backdrop: true,
+        keyboard: true,
+        focus: true
+    });
+    modalDialog.show();
 }
+
+//PARA TEST
+// personas.push(new Persona("Chechu", 70, 6004033, "M", 58, 1.60, 1933));
+// personas.push(new Persona("Carlos", 48, 23157174, "H", 80, 1.72, 1973));
+// personas.push(new Persona("Maca", 40, 15615615, "M", 54, 1.68, 1981));
+// personas.push(new Persona("Rena", 30, 3332332, "M", 60, 1.67, 1991));
+// personas.push(new Persona("Fede", 20, 43344344, "H", 64, 1.64, 2001));
+// personas.push(new Persona("Ale", 3, 3232323, "H", 17, 1, 2015));
+// dibujarTabla();
